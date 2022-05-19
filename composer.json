@@ -1,0 +1,54 @@
+{
+    "name": "mesilov/moneyphp-percentage",
+    "description": "Percentage (VAT) value object for moneyphp/money package with PHP implementation of Fowler's Money pattern",
+    "license": "MIT",
+    "keywords": [
+        "money",
+        "vo",
+        "value object",
+        "percentage"
+    ],
+    "authors": [
+        {
+            "name": "Mesilov Maxim",
+            "email": "mesilov.maxim@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "7.4.*|8.*",
+        "moneyphp/money": "3.*"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "phpunit/phpunit": "9.*",
+        "phpstan/phpstan": "1.1.*"
+    },
+    "suggest": {
+        "ext-gmp": "Calculate without integer limits",
+        "ext-intl": "Format Money objects with intl",
+        "florianv/exchanger": "Exchange rates library for PHP",
+        "florianv/swap": "Exchange rates library for PHP",
+        "psr/cache-implementation": "Used for Currency caching"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "MoneyPHP\\Percentage\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MoneyPHP\\Percentage\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "clean": "rm -rf vendor/",
+        "test": [
+            "vendor/bin/phpunit -v"
+        ]
+    }
+}
