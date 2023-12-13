@@ -15,13 +15,13 @@
         }
     ],
     "require": {
-        "php": "7.4.*|8.*",
-        "moneyphp/money": "3.*"
+        "php": "8.*",
+        "moneyphp/money": "4.*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "phpunit/phpunit": "9.*",
-        "phpstan/phpstan": "1.1.*"
+        "phpstan/phpstan": "1.*"
     },
     "suggest": {
         "ext-gmp": "Calculate without integer limits",
