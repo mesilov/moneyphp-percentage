@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoneyPHP\Percentage;
 
+use InvalidArgumentException;
 use JsonSerializable;
 use Money\Money;
 
@@ -25,19 +26,19 @@ final class Percentage implements JsonSerializable
     public function __construct(string $percentage, string $decimalSeparator = '.')
     {
         if ($percentage === '') {
-            throw new \InvalidArgumentException(sprintf('empty vat percentage'));
+            throw new InvalidArgumentException('empty vat percentage');
         }
         if (!is_numeric($percentage)) {
-            throw new \InvalidArgumentException(sprintf('invalid vat percentage [%s]', $percentage));
+            throw new InvalidArgumentException(sprintf('invalid vat percentage [%s]', $percentage));
         }
         // percentage string ends with $decimalSeparator? example: 5.
-        if ((strpos($percentage, $decimalSeparator) !== false)
+        if ((str_contains($percentage, $decimalSeparator))
             && substr($percentage, strpos($percentage, $decimalSeparator)) === $decimalSeparator) {
-            throw new \InvalidArgumentException(sprintf('invalid vat percentage [%s]', $percentage));
+            throw new InvalidArgumentException(sprintf('invalid vat percentage [%s]', $percentage));
         }
 
         // string without decimal part? example: 5 → 5.0
-        if (strpos($percentage, $decimalSeparator) === false) {
+        if (!str_contains($percentage, $decimalSeparator)) {
             $percentage .= $decimalSeparator . '0';
         }
         // string with trailing zeros in end? examples:
@@ -77,13 +78,13 @@ final class Percentage implements JsonSerializable
     /**
      * @return float|int
      */
-    public function toRatio()
+    public function toRatio(): float|int
     {
         if ($this->percentage === '') {
             throw new \UnexpectedValueException('Cannot return a ratio for an exempted vat percentage');
         }
 
-        return $this->percentage / 100;
+        return (float)$this->percentage / 100;
     }
 
     /**
@@ -147,7 +148,7 @@ final class Percentage implements JsonSerializable
             return new Money(0, $amount->getCurrency());
         }
 
-        return $amount->multiply($this->percentage / 100, Money::ROUND_HALF_DOWN);
+        return $amount->multiply((string)((float)$this->percentage / 100), Money::ROUND_HALF_DOWN);
     }
 
     /**
